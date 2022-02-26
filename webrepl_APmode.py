@@ -1,4 +1,5 @@
 import network
+import webrepl
 
 
 def do_connect(ssid, psw):
@@ -14,3 +15,8 @@ def main():
     ssid = "my-AP"
     psw = "51048563"
     do_connect(ssid, psw)
+    webrepl.start()
+
+
+if __name__=='__main__':
+    main()
