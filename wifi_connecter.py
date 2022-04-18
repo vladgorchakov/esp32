@@ -7,9 +7,11 @@ def do_router_connect(login, password):
     wlan.active(True)
     if not wlan.isconnected():
         print('connecting to network:')
+        counter = 0
         wlan.connect(login, password)
-        while not wlan.isconnected():
+        while not wlan.isconnected() and counter < 60:
             print('*', end='')
+            counter += 1
             sleep(0.5)
     print('\nyour router:', login)
     print('network config:', wlan.ifconfig())
