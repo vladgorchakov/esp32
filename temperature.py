@@ -1,6 +1,5 @@
 from machine import Pin
-import onewire
-import time, ds18x20
+import time, onewire, ds18x20
 
 
 def weather_sens(temp):
@@ -11,6 +10,7 @@ def weather_sens(temp):
     else:
         return 'Is is normally!'
 
+
 def main():
     ow = onewire.OneWire(Pin(12))
     ds = ds18x20.DS18X20(ow)
@@ -20,7 +20,7 @@ def main():
         ds.convert_temp()
         time.sleep(3)
         temp = ds.read_temp(roms[0])
-        print(weather_sens(temp))
+        print(weather_sens(temp) + ': ' + str(temp))
         
         
 if __name__=="__main__":
