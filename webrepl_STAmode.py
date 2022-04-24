@@ -16,8 +16,8 @@ def do_connect(login, password):
     
     
 def main():
-    login = 'IoT_339-1'
-    password = '51048563'
+    login = 'MTS_111'
+    password = '35139812'
     do_connect(login, password)
     webrepl.start()
 

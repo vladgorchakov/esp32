@@ -3,9 +3,9 @@ import time, onewire, ds18x20
 
 
 def weather_sens(temp):
-    if temp < 17:
+    if temp < 20:
         return 'It is Cold!'
-    elif temp > 21:
+    elif temp > 24:
         return 'It is Hot!'
     else:
         return 'Is is normally!'

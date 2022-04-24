@@ -5,9 +5,9 @@ sta_if.active(True)
 
 while True:
     ap = sta_if.scan()
-    for i in range(len(ap)):
-        print(str(ap[i][0])[2:-1])
+    #for i in range(len(ap)):
+        #print(str(ap[i][0])[2:-1])
     print('___________')
     print('*total*: ' + str(len(ap)))
     print('___________')
-    sleep(3)
+    sleep(0.5)
