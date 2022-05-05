@@ -19,4 +19,6 @@ class Sensor:
 
 temp = Sensor(12, 0)
 temp.connect_to_line()
-print(temp.get_data())
+while True:
+    print(temp.get_data())
+    time.sleep(1)
