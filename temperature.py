@@ -1,5 +1,4 @@
-from machine import Pin
-import time, onewire, ds18x20
+
 
 
 def weather_sens(temp):
