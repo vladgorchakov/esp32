@@ -1,8 +1,7 @@
 import network
 from umqtt.simple import MQTTClient
-from machine import Pin
+from machine import Pin, Timer
 import time, onewire, ds18x20
-from machine import Timer
 
 
 def http_get(url):
@@ -45,13 +44,8 @@ def send_to_nm(sensor_data):
 def start():
     sensor_data = connect_to_sensor(26)
     timer = Timer(0)
-    timer.init(period=300000, mode=Timer.PERIODIC, callback=lambda t:send_to_th(sensor_data))
-    
-def main():
-    while True:
-        print('Hello')
+    timer.init(period=15000, mode=Timer.PERIODIC, callback=lambda t:send_to_th(sensor_data))
+ 
         
 if __name__ == '__main__':
     start()
-    
-    
