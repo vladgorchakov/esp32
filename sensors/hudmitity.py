@@ -33,7 +33,11 @@ class HudmSensor:
     def hadmtemp(self) -> tuple:
         self.__sensor.measure()
         
-        return self.__sensor.humidity(), self.__sensor.temperature() 
+        return self.__sensor.humidity(), self.__sensor.temperature()
+    
+    def __rerp__(self):
+        self.__sensor.measure()
+        return f'{self.name} {self.place} {self.__sensor.humidity()} {self.__sensor.temperature()}'
     
 
 def main() -> None:
@@ -53,4 +57,5 @@ def main() -> None:
 
 
 if __name__=='__main__':
-    main()
+    #main()
+    pass

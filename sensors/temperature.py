@@ -24,6 +24,11 @@ class TempSensor:
             return 0
             
 
-        
+def main():
+    sensor = TempSensor(12)
+    print(sensor.temp)
 
-sensor = TempSensor(12)
+
+if __name__=='__main__':
+    main()
+
