@@ -32,10 +32,11 @@ class HudmSensor:
     @property
     def hadmtemp(self) -> tuple:
         self.__sensor.measure()
+        
         return self.__sensor.humidity(), self.__sensor.temperature() 
     
 
-def main():
+def main() -> None:
     hudm = HudmSensor(26)
     print(f'*Sensor*\nName: {hudm.name}; Place: {hudm.place}')
     
