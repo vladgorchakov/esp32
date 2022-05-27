@@ -2,23 +2,28 @@ from machine import Pin
 import time, onewire, ds18x20
 
 
-class DsTempSensor:
+class TempSensor:
     def __init__(self, pin):
         self.pin = pin
+        self.__ow = onewire.OneWire(Pin(self.pin))
+        self.__ds = ds18x20.DS18X20(self.__ow)
+        self.__roms = self.__ds.scan()
+        self.__temp = 0
     
     
-    def connect(self):
-        ow = onewire.OneWire(Pin(self.pin))
-        self.ds = ds18x20.DS18X20(ow)
-        self.roms = self.ds.scan()
-    
-    
+    @property
     def get_temp(self):
-        self.ds.convert_temp()
-        time.sleep(3)
-        self.temp = self.ds.read_temp(self.roms[0])
+        try:
+            self.__ds.convert_temp()
+            time.sleep(1)
+            self.__temp = self.__ds.read_temp(self.__roms[0])
+            return self.__temp
         
-        return self.temp
+        except:
+            print(f'No connected...')
+            return 0
+            
 
-sensor = DsTempSensor(12)
-sensor.connect()
+        
+
+sensor = TempSensor(12)
