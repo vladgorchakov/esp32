@@ -35,10 +35,6 @@ class HudmSensor:
         
         return self.__sensor.humidity(), self.__sensor.temperature()
     
-    def __rerp__(self):
-        self.__sensor.measure()
-        return f'{self.name} {self.place} {self.__sensor.humidity()} {self.__sensor.temperature()}'
-    
 
 def main() -> None:
     hudm = HudmSensor(26)
@@ -57,5 +53,4 @@ def main() -> None:
 
 
 if __name__=='__main__':
-    #main()
-    pass
+    main()
