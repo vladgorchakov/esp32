@@ -30,7 +30,7 @@ class HudmSensor:
     
     
     @property
-    def hadmtemp(self) -> tuple:
+    def hudmtemp(self) -> tuple:
         self.__sensor.measure()
         
         return self.__sensor.humidity(), self.__sensor.temperature()
