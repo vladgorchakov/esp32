@@ -7,7 +7,8 @@ class ThingSpeak:
         self.__api_key = "ZQT22H2MJ0E5QWYN"
         self.__path = "update?api_key=" + api_key + '&' + 'field'
     
-    def write(self, data: float, field: int) -> bool:
+    
+    def write(self, data: float, field: int) -> None:
         path = self.__path + str(field) + '=' + str(data)
         addr = socket.getaddrinfo(self.__host, 80)[0][-1]
         s = socket.socket()
