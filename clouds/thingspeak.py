@@ -6,12 +6,11 @@ class Channel:
         self.__host = "api.thingspeak.com"
         self.__api_key = api_key
         self.__channel_path = "update?api_key=" + api_key + '&' + 'field'
-        print(self.__channel_path)
-        self.__fields = {}
+        self.__fields = {} #channels
 
     def add_field(self, field_id):
         field_path = self.__channel_path + str(field_id) + '='
-        self.__fields[field_id] = Field(field_id, field_path, name='')
+        self.__fields[field_id] = Field(field_id, field_path, name='') #create new Field and and to dict
 
     @property
     def fields(self):
@@ -57,5 +56,16 @@ class Field:
         return self.__value
 
 
-t = Channel('ZQT22H2MJ0E5QWYN')
-t.add_field(1)
+def main():
+    import time
+    from random import randint
+    t = Channel('ZQT22H2MJ0E5QWYN')
+    t.add_field(1)
+    while True:
+        print(t.write_field(randint(30, 60), 1))
+        time.sleep(15)
+        
+
+
+if __name__=='__main__':
+    main()
