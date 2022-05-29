@@ -5,13 +5,13 @@ from time import sleep
 
 
 class WifiConnecter:
-    def __init__(self, login, password):
+    def __init__(self, login: str, password: str) -> None:
         self.login = login
         self.__password = password
         self.__wlan = network.WLAN(network.STA_IF)
     
     
-    def check_connection(self):
+    def check_connection(self) -> bool:
         counter = 0
         print('\nconnection to:', self.login)
         while not self.__wlan.isconnected() and counter < 60:
@@ -23,7 +23,7 @@ class WifiConnecter:
         return self.__wlan.isconnected()
         
         
-    def connect(self):
+    def connect(self) -> bool:
         self.__wlan.active(True)
         
         if not self.__wlan.isconnected():
@@ -34,7 +34,7 @@ class WifiConnecter:
             return True
         
         
-    def get_info(self):
+    def get_info(self) -> dict:
         info = {
             'AP:': self.login,
             'MAC:': ubinascii.hexlify(network.WLAN().config('mac'),':').decode(),

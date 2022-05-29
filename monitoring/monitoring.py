@@ -15,7 +15,6 @@ class Sender:
             
     def init_fields(self):
         for field in tuple(self.hudm_fields.keys()) + tuple(self.temp_fields.keys()):
-            print(field)
             self.__ch.add_field(field)
     
     
