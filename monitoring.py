@@ -18,19 +18,6 @@ class Monitoring:
             print(field)
             self.__ch.add_field(field)
     
-    def send_data(self):
-        if self.__ch.write_field(self.__hs.hudmitity, self.hudm_id):
-            print('hudmitity sent')
-        sleep(15)
-    
-        if self.__ch.write_field(self.__hs.temp, self.temp_id):
-            print('temperature sent')
-        sleep(15)
-        
-        if self.__ch.write_field(self.__ts.temp, self.temp2_id):
-            print('temperature 2 sent')
-        sleep(15)
-    
     
     def send(self):
         for field, sensor in self.hudm_fields.items():
