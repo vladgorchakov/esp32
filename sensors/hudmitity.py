@@ -4,7 +4,7 @@ import time
 
 
 class HudmSensor:
-    def __init__(self, pin: int, name='Hudmitity', place='my room') -> None:
+    def __init__(self, pin: int, name='hudmitity', place='my room') -> None:
         self.name = name
         self.place = place
         self.pin = machine.Pin(pin)
@@ -15,25 +15,40 @@ class HudmSensor:
     
     @property
     def hudmitity(self) -> int:
-        self.__sensor.measure()
-        self.__hum = self.__sensor.humidity()
-        
-        return self.__hum
+        try:
+            self.__sensor.measure()
+        except:
+            print('ERROR of updating value from .measure()')
+            time.sleep(1)
+            return self.hudmitity
+        else:
+            self.__hum = self.__sensor.humidity()            
+            return self.__hum
     
     
     @property
     def temp(self) -> int:
-        self.__sensor.measure()
-        self.__temp = self.__sensor.temperature()
-        
-        return self.__temp
+        try:
+            self.__sensor.measure()
+        except:
+            print('ERROR of updating value from .measure()')
+            time.sleep(1)
+            return self.temp
+        else:
+            self.__temp = self.__sensor.temperature()
+            return self.__temp
     
     
     @property
     def hudmtemp(self) -> tuple:
-        self.__sensor.measure()
-        
-        return self.__sensor.humidity(), self.__sensor.temperature()
+        try:
+            self.__sensor.measure()
+        except:
+            print('ERROR of updating value from .measure()')
+            time.sleep(1)
+            return self.hundtemp
+        else:
+            return self.__sensor.humidity(), self.__sensor.temperature()
     
 
 def main() -> None:
@@ -47,7 +62,7 @@ def main() -> None:
     time.sleep(1)
     
     #2 using hudmtemp property
-    hudm_temp = hudm.hadmtemp
+    hudm_temp = hudm.hudmtemp
     print(f'Temperature: {hudm_temp[0]}')
     print(f'Hudmitity: {hudm_temp[1]}')
 
