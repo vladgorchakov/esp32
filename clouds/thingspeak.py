@@ -8,7 +8,7 @@ class Channel:
         self.__channel_path = "update?api_key=" + api_key + '&' + 'field'
         self.__fields = {} #channels
 
-    def add_field(self, field_id):
+    def add_field(self, field_id: int):
         field_path = self.__channel_path + str(field_id) + '='
         self.__fields[field_id] = Field(field_id, field_path, name='') #create new Field and and to dict
 
@@ -30,25 +30,36 @@ class Field:
         
     @staticmethod
     def check_sending(data) -> bool:
-        num_get = int(str(data, 'utf8').split('\n')[-1])
+        try:
+            num_get = int(str(data, 'utf8').split('\n')[-1])
 
-        if num_get != 0:
-            return num_get
-        else:
+            if num_get != 0:
+                return num_get
+            else:
+                return False
+        except:
+            print(data)
             return False
 
-    def write(self, host, addr, value) -> bool:
-        path = self.__field_path + str(value)
-        s = socket.socket()
-        s.connect(addr)
-        s.send(bytes('GET /%s HTTP/1.0\r\nHost: %s\r\n\r\n' % (path, host), 'utf8'))
-        data = s.recv(1000)
-        s.close()
+            
+            
 
-        if self.check_sending(data):
-            self.__value = value
-            return True
-        else:
+    def write(self, host, addr, value) -> bool:
+        try:
+            path = self.__field_path + str(value)
+            s = socket.socket()
+            s.connect(addr)
+            s.send(bytes('GET /%s HTTP/1.0\r\nHost: %s\r\n\r\n' % (path, host), 'utf8'))
+            data = s.recv(1000)
+            s.close()
+
+            if self.check_sending(data):
+                self.__value = value
+                return True
+            else:
+                return False
+        
+        except OSError:
             return False
 
     @property
@@ -65,7 +76,6 @@ def main():
         print(t.write_field(randint(30, 60), 1))
         time.sleep(15)
         
-
 
 if __name__=='__main__':
     main()
