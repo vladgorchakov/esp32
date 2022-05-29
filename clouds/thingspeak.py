@@ -32,16 +32,14 @@ class Field:
     def check_sending(data) -> bool:
         try:
             num_get = int(str(data, 'utf8').split('\n')[-1])
-
+        except:
+            print('Not integer value')
+            return False
+        else:
             if num_get != 0:
                 return num_get
             else:
                 return False
-        except:
-            print(data)
-            return False
-
-            
             
 
     def write(self, host, addr, value) -> bool:
@@ -58,8 +56,7 @@ class Field:
                 return True
             else:
                 return False
-        
-        except OSError:
+        except:
             return False
 
     @property
@@ -68,14 +65,8 @@ class Field:
 
 
 def main():
-    import time
-    from random import randint
-    t = Channel('ZQT22H2MJ0E5QWYN')
-    t.add_field(1)
-    while True:
-        print(t.write_field(randint(30, 60), 1))
-        time.sleep(15)
+    pass
         
-
+        
 if __name__=='__main__':
     main()

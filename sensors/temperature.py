@@ -15,17 +15,18 @@ class TempSensor:
     def temp(self) -> float:
         try:
             self.__ds.convert_temp()
+        except:
+            print(f'No connected to temp sensor!')
+            sleep(1)
+            self.temp
+        else:
             time.sleep(1)
             self.__temp = self.__ds.read_temp(self.__roms[0])
             return self.__temp
-        
-        except:
-            print(f'No connected...')
-            return 0
             
 
 def main():
-    sensor = TempSensor(12)
+    sensor = TempSensor(25)
     print(sensor.temp)
 
 

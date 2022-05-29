@@ -4,7 +4,7 @@ from sensors.temperature import TempSensor
 from time import sleep
 
 
-class Monitoring:
+class Sender:
     def __init__(self, api_key, pin_hs, pin_ts, hudm_id, temp_id, temp2_id):
         self.__hs = HudmSensor(pin_hs)
         self.__ts = TempSensor(pin_ts)
@@ -20,6 +20,7 @@ class Monitoring:
     
     
     def send(self):
+        sleep(1)
         for field, sensor in self.hudm_fields.items():
             self.__ch.write_field(sensor.hudmitity, field)
             print('hudm sent')
@@ -30,5 +31,9 @@ class Monitoring:
             print('temp' + str(field) + 'sent')
             sleep(15)
         
-
-mon = Monitoring('ZQT22H2MJ0E5QWYN', 26, 25, 1, 2, 3)
+        
+def main():    
+    pass   
+    
+if __name__=='__main__':
+    main()
