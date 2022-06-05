@@ -41,14 +41,13 @@ class HudmSensor:
     
     @property
     def hudmtemp(self) -> tuple:
-        try:
-            self.__sensor.measure()
-        except:
-            print('ERROR of updating value from .measure()')
-            time.sleep(1)
-            return self.hundtemp
-        else:
-            return self.__sensor.humidity(), self.__sensor.temperature()
+        while True:
+            try:
+                self.__sensor.measure()
+                return self.__sensor.humidity(), self.__sensor.temperature()
+            except:
+                print('ERROR of updating value from .measure()')
+                time.sleep(2)
     
 
 def main() -> None:
