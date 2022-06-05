@@ -15,29 +15,29 @@ class HudmSensor:
     
     @property
     def hudmitity(self) -> int:
-        try:
-            self.__sensor.measure()
-        except:
-            print('ERROR of updating value from .measure()')
-            time.sleep(1)
-            return self.hudmitity
-        else:
-            self.__hum = self.__sensor.humidity()            
-            return self.__hum
-    
+        while True:
+            try:
+                print('checking')
+                self.__sensor.measure()
+                self.__hum = self.__sensor.humidity()            
+                return self.__hum
+            except:
+                print('ERROR of updating value from .measure()')
+                time.sleep(2)
+                
+                
     
     @property
     def temp(self) -> int:
-        try:
-            self.__sensor.measure()
-        except:
-            print('ERROR of updating value from .measure()')
-            time.sleep(1)
-            return self.temp
-        else:
-            self.__temp = self.__sensor.temperature()
-            return self.__temp
-    
+        while True:
+            try:
+                self.__sensor.measure()
+                self.__temp = self.__sensor.temperature()
+                return self.__temp 
+            except:
+                print('ERROR of updating value from .measure()')
+                time.sleep(2)
+                
     
     @property
     def hudmtemp(self) -> tuple:
@@ -61,7 +61,7 @@ def main() -> None:
     print(f'Hudmitity: {hudm.hudmitity}')
     time.sleep(1)
     
-    #2 using hudmtemp property
+    #2 using hudmtemp propertyss
     hudm_temp = hudm.hudmtemp
     print(f'Temperature: {hudm_temp[0]}')
     print(f'Hudmitity: {hudm_temp[1]}')
