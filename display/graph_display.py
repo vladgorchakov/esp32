@@ -4,13 +4,6 @@ from time import sleep
 from random import randint
 from math import sin, cos, radians
 
-i2c = SoftI2C(scl=Pin(25), sda=Pin(26))
-
-oled_width = 128
-oled_height = 64
-oled = ssd1306.SSD1306_I2C(oled_width, oled_height, i2c)
-
-
 class Graph:
     def __init__(self, oled):
         self.oled = oled
@@ -40,6 +33,16 @@ class Graph:
             oled.show()
 
 
-gr = Graph(oled)
-gr.draw_sin()
-gr.make_noise()
+def main():
+    i2c = SoftI2C(scl=Pin(25), sda=Pin(26))
+
+    oled_width = 128
+    oled_height = 64
+    oled = ssd1306.SSD1306_I2C(oled_width, oled_height, i2c)
+
+    gr = Graph(oled)
+    gr.draw_sin()
+    gr.make_noise()
+
+if __name__ == '__main__':
+    main()
