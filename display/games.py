@@ -57,7 +57,7 @@ class GraphicDisplayGame:
     def run(self):
         while True:
             self.scan_position()
-            self.draw_rectangle(10, 10)
+            self.draw_rectangle(1, 10)
             sleep(0.01)
 
 

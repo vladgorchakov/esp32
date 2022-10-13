@@ -7,6 +7,8 @@ from math import sin, cos, radians
 class Graph:
     def __init__(self, oled):
         self.oled = oled
+        self.step_noise_x = 2
+        self.step_noise_y = 2
 
 
     def draw_graph(self, oled):
@@ -27,8 +29,8 @@ class Graph:
     def make_noise(self):
         while True:
             self.oled.fill(0)
-            for y in range(0, self.oled.height, 2):
-                for x in range(0, self.oled.width, 2):
+            for y in range(0, self.oled.height, self.step_noise_y):
+                for x in range(0, self.oled.width, self.step_noise_x):
                     self.oled.pixel(x + randint(0, 5), y + randint(0, 5), 1)
             self.oled.show()
 
@@ -41,7 +43,7 @@ def main():
     oled = ssd1306.SSD1306_I2C(oled_width, oled_height, i2c)
 
     gr = Graph(oled)
-    gr.draw_sin()
+    gr.make_noise()
 
 if __name__ == '__main__':
     main()
