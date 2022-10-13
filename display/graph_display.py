@@ -13,7 +13,7 @@ class Graph:
         for y in range(oled.height):
             pirnt(y)
 
-    def draw_sin(self, start=0, stop=7200, step=10):
+    def draw_sin(self, start=0, stop=7200, step=7):
         x_s = 0
         for x in range(start, stop, step):
             y = self.oled.height/2 + self.oled.height/2 * sin(radians(x))
@@ -41,7 +41,7 @@ def main():
     oled = ssd1306.SSD1306_I2C(oled_width, oled_height, i2c)
 
     gr = Graph(oled)
-    gr.make_noise()
+    gr.draw_sin()
 
 if __name__ == '__main__':
     main()

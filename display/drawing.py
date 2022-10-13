@@ -15,22 +15,36 @@ y = 0
 oled.pixel(x, y, 1)
 oled.show()
 
-pin_x = Pin(12, Pin.IN, Pin.PULL_DOWN)
-pin_y = Pin(32, Pin.IN, Pin.PULL_DOWN)
+pin_right = Pin(12, Pin.IN, Pin.PULL_DOWN)
+pin_down = Pin(32, Pin.IN, Pin.PULL_DOWN)
+pin_left = Pin(18, Pin.IN, Pin.PULL_DOWN)
+pin_up = Pin(19, Pin.IN, Pin.PULL_DOWN)
 
 while True:
-    print(pin_x.value(), pin_y.value())
-    if pin_x.value():
+    if pin_right.value():
         if x < oled_width:
             x += 1
         else:
             x = 0
-        oled.pixel(x, y, 1)
-    elif pin_y.value():
+
+    elif pin_down.value():
         if y < oled_height:
             y += 1
         else:
             y = 0
-        oled.pixel(x, y, 1)
+
+    elif pin_left.value():
+        if x > 0:
+            x -= 1
+        else:
+            x = oled_width
+
+    elif pin_up.value():
+        if y > 0:
+            y -= 1
+        else:
+            y = oled_height
+
+    oled.pixel(x, y, 1)
     oled.show()
     sleep(0.01)
