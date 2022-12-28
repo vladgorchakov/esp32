@@ -31,10 +31,58 @@ class ADC:
             
         return sample
     
-
+    @property
+    def adc_levels(self):
+        return self.__adc_levels
+    
+    
+    
+class PotentiometerLedIndicator():
+    def __init__(self, adc, leds: list):
+        self.potentiometer = adc
+        self.leds = leds
+        self.total_intervals = len(leds)
+        
+        
+    def get_intervals(self):
+        values_interval = self.potentiometer.adc_levels / self.total_intervals
+        inters = {}
+        values = [i * values_interval for i in range(self.total_intervals + 1)]
+        for i in range(1, self.total_intervals + 1):
+            inters[i] = (values[i - 1], values[i])
+        
+        return inters
+    
+    
+    def decode_val_to_interval(self, val, intervals):
+        for interval_items in intervals.items():
+            if val > interval_items[1][0] and val <= interval_items[1][1]:
+                return interval_items[0]
+    
+    
+    def indicate(self):
+        intervals = self.get_intervals()
+        interval = buf = 1
+        current_leds = self.leds[0]
+        while True:
+            val = self.potentiometer.read_value()
+            buf = self.decode_val_to_interval(val, intervals)
+            if buf != interval and buf != None:
+                current_leds.off()
+                interval = buf
+                current_leds = self.leds[interval - 1]
+                current_leds.on()
+                
+            sleep(0.04)
+    
+    
+    
 def main():
     adc = ADC(12, 3, 'PA5')
-    print(adc.read_voltage())
+    leds = [pyb.LED(i) for i in range(1, 5)]
+    p = PotentiometerLedIndicator(adc, leds)
+    p.indicate()
+    
     
 if __name__ == '__main__':
     main()
