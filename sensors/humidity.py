@@ -1,20 +1,23 @@
 import dht
 import machine
 import time
+import ujson
 
 
-class HudmSensor:
-    def __init__(self, pin: int, name='hudmitity', place='my room') -> None:
+class HumSensor:
+    def __init__(self, pin: int, name='humidity', place='my room') -> None:
         self.name = name
         self.place = place
         self.pin = machine.Pin(pin)
         self.__hum = 0
         self.__temp = 0
-        self.__sensor = dht.DHT11(self.pin)    
+        self.__sensor = dht.DHT11(self.pin)
+        self.__log = []
+        self.__timer = machine.Timer(1)
     
     
     @property
-    def hudmitity(self) -> int:
+    def humidity(self) -> int:
         while True:
             try:
                 print('checking')
@@ -40,7 +43,7 @@ class HudmSensor:
                 
     
     @property
-    def hudmtemp(self) -> tuple:
+    def humtemp(self) -> tuple:
         while True:
             try:
                 self.__sensor.measure()
@@ -48,20 +51,50 @@ class HudmSensor:
             except:
                 print('ERROR of updating value from .measure()')
                 time.sleep(2)
+                
+                
+    def add_to_log(self, timer):
+        if len(self.__log) < 50:
+                self.__log.append(self.humtemp)
+        else:
+            self.__log = self.__log[1:] + [self.humtemp]
+        
+    
+    def scan(self, period=300000):
+        self.__timer.init(period=period, mode=machine.Timer.PERIODIC, callback=self.add_to_log)
+    
+    
+    def humtemp_json(self):
+        while True:
+            try:
+                self.__sensor.measure()
+                payload = {
+                        'temp': self.__sensor.temperature(),
+                        'humidity': self.__sensor.humidity()   
+                        }
+                return ujson.dumps(payload)
+            
+            except:
+                print('ERROR of updating value from .measure()')
+                time.sleep(2)
+        
+    @property
+    def log(self):
+        return self.__log
     
 
 def main() -> None:
-    hudm = HudmSensor(26)
+    hudm = HumSensor(26)
     print(f'*Sensor*\nName: {hudm.name}; Place: {hudm.place}')
     
-    #1 using hudmitity and temp properties
+    #1 using humidity and temp properties
     print(f'Temperature: {hudm.temp}')
     time.sleep(1)
-    print(f'Hudmitity: {hudm.hudmitity}')
+    print(f'Hudmitity: {hudm.humidity}')
     time.sleep(1)
     
-    #2 using hudmtemp propertyss
-    hudm_temp = hudm.hudmtemp
+    #2 using humtemp propertyss
+    hudm_temp = hudm.humtemp
     print(f'Temperature: {hudm_temp[0]}')
     print(f'Hudmitity: {hudm_temp[1]}')
 

@@ -8,9 +8,9 @@ class Channel:
         self.__channel_path = "update?api_key=" + api_key + '&' + 'field'
         self.__fields = {} #channels
 
-    def add_field(self, field_id: int):
+    def add_field(self, field_id: int, name: str):
         field_path = self.__channel_path + str(field_id) + '='
-        self.__fields[field_id] = Field(field_id, field_path, name='') #create new Field and and to dict
+        self.__fields[field_id] = Field(field_id, field_path, name=name) #create new Field and and to dict
 
     @property
     def fields(self):
